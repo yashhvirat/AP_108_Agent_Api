@@ -17,7 +17,6 @@ WORKSPACE_ID = st.secrets.get("WORKSPACE_ID") or os.getenv("WORKSPACE_ID")
 DATASET_ID = st.secrets.get("DATASET_ID") or os.getenv("DATASET_ID")
 
 
-
 AUTHORITY = f"https://login.microsoftonline.com/{TENANT_ID}"
 
 SCOPES = [
