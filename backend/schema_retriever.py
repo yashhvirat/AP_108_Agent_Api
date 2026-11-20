@@ -2,7 +2,7 @@
 import re
 from functools import lru_cache
 
-from metadata import (
+from backend.metadata import (
     get_tables,
     get_columns,
     get_measures,
