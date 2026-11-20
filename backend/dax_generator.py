@@ -63,6 +63,8 @@ def build_dax_prompt(question, plan, schema):
     - Use exact existing measure names from the measures metadata.
     - If a required column or measure is not present, return
       needs_clarification and identify the missing metadata.
+    - Never generate a table or column reference unless that exact table-column combination exists in the provided live metadata.
+    - Do not use assumptions or similar column names.
 
     Examples:
     - If metadata contains "Locality (BL)", use [Locality (BL)].
@@ -292,6 +294,39 @@ def build_dax_prompt(question, plan, schema):
     - Do not invent date values.
     - Apply date filters alongside both mandatory global filters.
     - Do not allow date filters to remove mandatory base filters.
+
+    CRITICAL: DATE FILTERS MUST USE VERIFIED METADATA
+
+    - Always use the exact calendar table and date column
+    names returned by live metadata.
+    - The confirmed calendar date column is:
+    'Calender'[Date]
+    - Never invent columns such as Month Name, Month,
+    Month Number, or Year.
+    - For month-based requests, generate date range filters
+    using the verified Date column.
+
+    Examples:
+
+    October 2026:
+
+    FILTER(
+        'Calender',
+        'Calender'[Date] >= DATE(2026, 10, 1) &&
+        'Calender'[Date] <= DATE(2026, 10, 31)
+    )
+
+    November 2026:
+
+    FILTER(
+        'Calender',
+        'Calender'[Date] >= DATE(2026, 11, 1) &&
+        'Calender'[Date] <= DATE(2026, 11, 30)
+    )
+
+    If the requested month or year cannot be determined,
+    ask for clarification rather than inventing a column.
+
 
     6. GROUPING AND RANKING
 
