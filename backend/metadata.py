@@ -7,14 +7,14 @@ import pyarrow as pa
 
 def get_metadata_token():
 
-    tenant_id = st.secrets["TENANT_ID"] or os.getenv("TENANT_ID")
-    client_id = st.secrets["CLIENT_ID"] or os.getenv("CLIENT_ID")
-    client_secret = st.secrets["CLIENT_SECRET"] or os.getenv("CLIENT_SECRET")
+    TENANT_ID = st.secrets["POWERBI_TENANT_ID"]
+    CLIENT_ID = st.secrets["POWERBI_CLIENT_ID"]
+    CLIENT_SECRET = st.secrets["POWERBI_CLIENT_SECRET"]
 
     app = msal.ConfidentialClientApplication(
-        client_id,
-        authority=f"https://login.microsoftonline.com/{tenant_id}",
-        client_credential=client_secret
+        CLIENT_ID,
+        authority=f"https://login.microsoftonline.com/{TENANT_ID}",
+        client_credential=CLIENT_SECRET
     )
 
     result = app.acquire_token_for_client(
@@ -31,11 +31,11 @@ def get_metadata_token():
 
 def execute_metadata_dax(query):
 
-    dataset_id = st.secrets["DATASET_ID"] or os.getenv("DATASET_ID")
+    DATASET_ID = st.secrets["DATASET_ID"]
 
     url = (
         f"https://api.powerbi.com/v1.0/myorg/"
-        f"datasets/{dataset_id}/executeDaxQueries"
+        f"datasets/{DATASET_ID}/executeDaxQueries"
     )
 
     token = get_metadata_token()
