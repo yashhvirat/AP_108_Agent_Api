@@ -91,10 +91,10 @@ def ask_powerbi(question):
 
         data = execute_dax(dax)
 
-        print("\n========== POWER BI RESULT ==========")
-        print(data)
-        print("Result type:", type(data))
-        print("====================================")
+        # print("\n========== POWER BI RESULT ==========")
+        # print(data)
+        # print("Result type:", type(data))
+        # print("====================================")
 
         if data is None:
             return {
