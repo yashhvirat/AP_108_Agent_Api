@@ -63,6 +63,36 @@ def get_metadata_sets(schema):
 
     return measures, columns, tables
 
+def validate_mandatory_base_filters(dax):
+
+    errors = []
+
+    normalized = re.sub(r"\s+", "", dax).lower()
+
+    ambulance_filter = (
+        """'err'[ambulance/feeder vehicle]="ambulance" """
+        .replace(" ", "")
+    )
+
+    backup_filter = (
+        """'err'[ambulance base location]<>"backup" """
+        .replace(" ", "")
+    )
+
+    if ambulance_filter not in normalized:
+        errors.append(
+            'Missing mandatory filter: '
+            "'ERR'[Ambulance/Feeder vehicle] = \"Ambulance\""
+        )
+
+    if backup_filter not in normalized:
+        errors.append(
+            'Missing mandatory filter: '
+            "'ERR'[Ambulance Base Location] <> \"Backup\""
+        )
+
+    return errors
+
 
 def validate_dax(dax, schema):
 
@@ -178,6 +208,11 @@ def validate_dax(dax, schema):
             errors.append(
                 f"Unknown measure or column reference: [{measure}]"
             )
+
+    # Mandatory AP108 base-filter validation
+    base_filter_errors = validate_mandatory_base_filters(dax)
+
+    errors.extend(base_filter_errors)
 
     # --------------------------------
     # 7. Final result
