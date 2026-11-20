@@ -9,12 +9,12 @@ import pandas as pd
 # POWER BI CONFIGURATION
 # =====================================================
 
-TENANT_ID = os.getenv("TENANT_ID")
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+TENANT_ID = st.secrets.get("TENANT_ID") or os.getenv("TENANT_ID")
+CLIENT_ID = st.secrets.get("CLIENT_ID") or os.getenv("CLIENT_ID")
+CLIENT_SECRET = st.secrets.get("CLIENT_SECRET") or os.getenv("CLIENT_SECRET")
 
-WORKSPACE_ID = os.getenv("WORKSPACE_ID")
-DATASET_ID = os.getenv("DATASET_ID")
+WORKSPACE_ID = st.secrets.get("WORKSPACE_ID") or os.getenv("WORKSPACE_ID")
+DATASET_ID = st.secrets.get("DATASET_ID") or os.getenv("DATASET_ID")
 
 
 
