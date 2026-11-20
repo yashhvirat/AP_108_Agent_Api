@@ -7,9 +7,9 @@ import pyarrow as pa
 
 def get_metadata_token():
 
-    TENANT_ID = st.secrets["POWERBI_TENANT_ID"]
-    CLIENT_ID = st.secrets["POWERBI_CLIENT_ID"]
-    CLIENT_SECRET = st.secrets["POWERBI_CLIENT_SECRET"]
+    TENANT_ID = st.secrets["TENANT_ID"]
+    CLIENT_ID = st.secrets["CLIENT_ID"]
+    CLIENT_SECRET = st.secrets["CLIENT_SECRET"]
 
     app = msal.ConfidentialClientApplication(
         CLIENT_ID,
