@@ -327,6 +327,18 @@ def build_dax_prompt(question, plan, schema):
     If the requested month or year cannot be determined,
     ask for clarification rather than inventing a column.
 
+    MONTH INTERPRETATION RULE:
+
+    - Treat month names and abbreviations (Jan, January,
+      Feb, February, Oct, October, etc.) as equivalent
+      when interpreting the user's question.
+    - Do not use a month-name column for filtering.
+    - Convert the interpreted month and year into
+      an inclusive date range.
+    - Always filter using 'Calender'[Date].
+    - If the year is missing and cannot be determined
+      from the planner's date context, request clarification.
+
 
     6. GROUPING AND RANKING
 
